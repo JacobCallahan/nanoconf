@@ -1,0 +1,128 @@
+[project]
+name = "nanoconf"
+description = "The tiny opinionated config loader."
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = ["nanoconf", "config", "configuration", "settings"]
+authors = [
+    {name = "Jacob J Callahan", email = "jacob.callahan05@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: Custom",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "python-box",
+    "pyyaml",
+]
+dynamic = ["version"]  # dynamic fields to update on build - version via setuptools_scm
+
+[project.urls]
+Repository = "https://github.com/JacobCallahan/nanoconf"
+
+[build-system]
+requires = ["setuptools", "setuptools-scm[toml]", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+platforms = ["any"]
+zip-safe = false
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["nanoconf"]
+
+[tool.setuptools_scm]  # same as use_scm_version=True in setup.py
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "pre-commit",
+    "pytest",
+    "ruff",
+]
+setup = [
+    "build",
+    "setuptools",
+    "twine",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-v", "-l", "--color=yes", "--code-highlight=yes"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | build
+  | dist
+  | tests/data
+)/
+'''
+
+[tool.ruff]
+target-version = "py311"
+fixable = ["ALL"]
+
+select = [
+    "B", # bugbear
+    "C", # complexity
+    "C4", # flake8-comprehensions
+    "COM818", # Trailing comma on bare tuple prohibited
+    "E", # pycodestyle
+    "F", # pyflakes/autoflake
+    "G", # flake8-logging-format
+    "I", # isort
+    "ISC001", # Implicitly concatenated string literals on one License
+    "N",
+    "PERF", # Perflint rules
+    "PGH004", # Use specific rule codes when using noqa
+    "PLC", # pylint
+    "PLE", # pylint
+    "PLR", # pylint
+    "PLW", # pylint
+    "PTH", # Use pathlib
+    "RUF", # Ruff-specific rules
+    "S", # flake8-bandit
+    "SIM", #flake8-simplify
+    "T100", # leftover breakpoint()
+    "T20", # leftover print()
+    "TRY004", # Prefer TypeError exception for invalid type
+    "TRY200", # Use raise from to specify exception cause
+    "TRY302", # Remove exception handler; error is immediately re-raised
+    "PL", # pylint
+    "UP", # pyupgrade
+    "W", # pycodestyle
+]
+
+ignore = [
+    "ANN", # flake8-annotations
+    "E501", # line too long
+    "RUF012", # Mutable class attributes should be annotated with typing.ClassVar
+]
+
+[tool.ruff.per-file-ignores]
+"tests/test_nanoconf.py" = ["S101", "PLR2004"]
+
+[tool.ruff.flake8-pytest-style]
+fixture-parentheses = false
+
+[tool.ruff.isort]
+force-sort-within-sections = true
+known-first-party = [
+    "nanoconf",
+]
+combine-as-imports = true
+
+[tool.ruff.mccabe]
+max-complexity = 25

@@ -1,0 +1,6 @@
+_envar_prefix: testdog
+name: Dog
+species: Canis lupus familiaris
+habitat: Domesticated
+diet: Omnivore
+weight: 5-70 kg

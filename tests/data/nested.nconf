@@ -1,0 +1,9 @@
+_import:
+  - animals
+test: value
+top:
+  v1: 1
+  middle:
+    v2: 2
+    lowest:
+      v3: 3

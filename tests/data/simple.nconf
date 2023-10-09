@@ -1,0 +1,8 @@
+_envar_prefix: simple
+key: value
+test: 1
+overriden: False
+things:
+    - thing1
+    - thing2
+    - thing3
