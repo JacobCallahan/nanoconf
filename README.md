@@ -18,10 +18,22 @@ from nanoconf import NC
 # Create a new configuration object
 config = NanoConf("/path/to/config.nconf")
 
-# Use the configuration object
+# Access config values using dictionary-style access
 print(config["key"])
-# Since all values are also loaded as attributes, you can also do
+
+# Or use dotted attribute access (recommended for cleaner code)
 print(config.key)
+
+# Both methods work interchangeably
+assert config["key"] == config.key
+
+# Nested values support both access methods too
+print(config.database.host)  # attribute access
+print(config["database"]["host"])  # dictionary access
+
+# Convert to plain Python dict (recursively)
+plain_dict = config.to_dict()
+# All nested NanoConf objects become regular dicts
 ```
 
 Configuration File Format
@@ -116,4 +128,24 @@ export myapp_abc='{"a": 1, "b": 2, "c": 3}'
 ```python
 config = NanoConf("/path/to/config.nconf")
 print(config.abc.b)
+```
+
+Converting to Plain Dictionaries
+---------------------------------
+NanoConf objects can be recursively converted to plain Python dictionaries using the `to_dict()` method. This is useful for serialization, passing to libraries that expect plain dicts, or API responses.
+
+```python
+config = NanoConf("/path/to/config.nconf")
+
+# Convert entire config to plain dict
+plain = config.to_dict()
+
+# All nested NanoConf objects become regular dicts
+assert isinstance(plain, dict)
+assert not isinstance(plain, NanoConf)
+
+# Works with deeply nested structures
+if "database" in config:
+    db_dict = config.database.to_dict()
+    # Can now be serialized to JSON, YAML, etc.
 ```
